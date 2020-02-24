@@ -62,4 +62,9 @@
 
   var arrData = generatorArrayObj();
   fillDom(arrData);
+
+  window.main = {
+    arrData: arrData
+  }
+
 })();
