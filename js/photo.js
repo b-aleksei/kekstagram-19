@@ -7,7 +7,7 @@
   };
 
   var main = document.querySelector('.big-picture');
-  main.classList.remove('hidden');
+  // main.classList.remove('hidden');
   var img = main.querySelector('.big-picture__img img');
   var likes = main.querySelector('.likes-count');
   var amountComments = main.querySelector('.comments-count');
@@ -44,8 +44,8 @@
     showPhoto(response[0]);
   });
 
-  main.querySelector('.social__comment-count').classList.add('hidden');
-  main.querySelector('.comments-loader').classList.add('hidden');
-  document.body.classList.add('modal-open')
+  // main.querySelector('.social__comment-count').classList.add('hidden');
+  // main.querySelector('.comments-loader').classList.add('hidden');
+  // document.body.classList.add('modal-open')
 })();
 
