@@ -2,7 +2,7 @@
 
 (function () {
 
-  window.slider = {};
+  window.filter = {};
 
   var SCALE_VALUE = 100;
   var form = document.forms[1];
@@ -18,7 +18,7 @@
   track.hidden = true;
 
   // change scale
-  var incValue = function () {
+  window.filter.incValue = function () {
     if (SCALE_VALUE < 100) {
       SCALE_VALUE += 25;
       preview.style.transform = 'scale(' + SCALE_VALUE + '%)';
@@ -26,7 +26,7 @@
     }
   };
 
-  var decValue = function () {
+  window.filter.decValue = function () {
     if (SCALE_VALUE > 25) {
       SCALE_VALUE -= 25;
       preview.style.transform = 'scale(' + SCALE_VALUE + '%)';
@@ -35,7 +35,7 @@
   };
 
   // horizontal slider
-  window.slider.onHandlerMouse = function (e) {
+  window.filter.onHandlerMouse = function (e) {
 
     var shiftX = e.clientX - pin.offsetLeft;
     var rightEdge = slider.offsetWidth;
@@ -72,7 +72,7 @@
   };
 
   // color filter
-  var onChangeForm = function (e) {
+  window.filter.onChangeForm = function (e) {
     preview.className = '';
       preview.removeAttribute('style');
     if (e.target.matches('.effects__radio:not(#effect-none)')) {
@@ -86,10 +86,6 @@
     }
   };
 
-  form.addEventListener('change', onChangeForm);
-  window.slider.pin = pin;
-  window.slider.colorIndicator = colorIndicator;
-  window.slider.decValue = decValue;
-  window.slider.incValue = incValue;
+  window.filter.pin = pin;
 
 })();
