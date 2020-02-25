@@ -10,6 +10,7 @@
   var track = form.querySelector('.img-upload__effect-level');
   var pin = form.querySelector('.effect-level__pin');
   var colorIndicator = form.querySelector('.effect-level__depth');
+  var effect = form.querySelector('.effect-level__value');
   var preview = form.querySelector('.img-upload__preview img');
   var scaleIndicator = form.querySelector('.scale__control--value');
   var currentFilter = 'none';
@@ -51,7 +52,7 @@
         left = rightEdge;
       }
       colorIndicator.style.width = pin.style.left = left + 'px';
-      var percent = Math.round(left / slider.offsetWidth * 100);
+      var percent = effect = Math.round(left / slider.offsetWidth * 100);
 
       var filter = {
         chrome: 'grayscale(' + percent / 100 + ')',
