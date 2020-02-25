@@ -8,28 +8,11 @@
   var editForm = form.querySelector('.img-upload__overlay');
   var miniPreview = form.querySelectorAll('.effects__preview');
   var btnClose = form.querySelector('#upload-cancel');
-/*  var scaleIndicator = form.querySelector('.scale__control--value');
-  var scaleValue = 100;*/
   var pin = window.slider.pin;
   var colorIndicator = window.slider.colorIndicator;
   var scaleSmaller = form.querySelector('.scale__control--smaller');
   var scaleBigger = form.querySelector('.scale__control--bigger');
-
-/*  // change scale
-  var incValue = function () {
-    if (scaleValue < 100) {
-      scaleValue += 25;
-      scaleIndicator.value = scaleValue + '%';
-    }
-  };
-
-  var decValue = function () {
-    if (scaleValue > 25) {
-      scaleValue -= 25;
-      scaleIndicator.value = scaleValue + '%';
-    }
-  };*/
-
+  preview.src = '';
   // file upload
   fileChooser.addEventListener('change', function () {
     var file = fileChooser.files[0];
@@ -51,8 +34,8 @@
       Array.from(miniPreview).forEach(function (item) {
         item.style.backgroundImage = "url('" + URL.revokeObjectURL(blob) + "')";
       });
-      scaleSmaller.removeEventListener('click', decValue);
-      scaleBigger.removeEventListener('click', incValue);
+      scaleSmaller.removeEventListener('click', window.slider.decValue);
+      scaleBigger.removeEventListener('click', window.slider.incValue);
       pin.removeEventListener('mousedown', window.slider.onHandlerMouse);
       colorIndicator.style.width = pin.style.left = '91px';
     };
@@ -66,14 +49,6 @@
         closePopup()
       }
     }, {once: true});
-
-/*    form.addEventListener('click', function (e) {
-      console.log(123);
-      if (e.target.closest('.effects__preview:not(.effects__preview--none)')) {
-        console.log(e.target.classList[1]);
-      }
-    });*/
-
   });
 
 })();
