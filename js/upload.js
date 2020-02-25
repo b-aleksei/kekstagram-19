@@ -13,6 +13,7 @@
   var scaleSmaller = form.querySelector('.scale__control--smaller');
   var scaleBigger = form.querySelector('.scale__control--bigger');
   preview.src = '';
+
   // file upload
   fileChooser.addEventListener('change', function () {
     var file = fileChooser.files[0];
@@ -27,6 +28,7 @@
     scaleSmaller.addEventListener('click', window.slider.decValue);
     scaleBigger.addEventListener('click', window.slider.incValue);
     pin.addEventListener('mousedown', window.slider.onHandlerMouse);
+    window.validity.hashTag.addEventListener('input', window.validity.method);
 
     var closePopup = function () {
       editForm.classList.add('hidden');
@@ -38,17 +40,22 @@
       scaleBigger.removeEventListener('click', window.slider.incValue);
       pin.removeEventListener('mousedown', window.slider.onHandlerMouse);
       colorIndicator.style.width = pin.style.left = '91px';
+      document.removeEventListener('keydown', closeEsc);
+      window.validity.hashTag.removeEventListener('input', window.validity.method);
     };
 
     btnClose.addEventListener('click', function () {
       closePopup()
     }, {once: true});
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
+
+    var closeEsc = function (e) {
+      if (e.key === 'Escape' && !e.target.matches('.text__hashtags')) {
         editForm.classList.add('hidden');
         closePopup()
       }
-    }, {once: true});
+    };
+
+    document.addEventListener('keydown', closeEsc);
   });
 
 })();
