@@ -3,28 +3,8 @@
 (function () {
 
   window.slider = {};
-  var filter = {
-    DEFAULT_VALUE: 20,
-    chrome: 'grayscale',
-    sepia: 'sepia',
-    marvin: 'invert',
-    phobos: 'blur',
-    heat: 'brightness',
-    _value: 'none',
-    get value() {
-      if (this._value === 'blur') {
-        return 'blur(' + this.DEFAULT_VALUE + 'px)'
-      } else if (this._value === 'none') {
-        return 'none'
-      } else {
-        return this._value + '(' + this.DEFAULT_VALUE + '%)'
-      }
-    },
-    set value(prop) {
-      this._value = this[prop] || prop;
-    }
-  };
 
+  var SCALE_VALUE = 100;
   var form = document.forms[1];
   var slider = form.querySelector('.effect-level__line');
   var track = form.querySelector('.img-upload__effect-level');
@@ -32,7 +12,9 @@
   var colorIndicator = form.querySelector('.effect-level__depth');
   var preview = form.querySelector('.img-upload__preview img');
   var scaleIndicator = form.querySelector('.scale__control--value');
-  var SCALE_VALUE = 100;
+  var currentFilter = 'none';
+
+  track.hidden = true;
 
   // change scale
   var incValue = function () {
@@ -69,8 +51,17 @@
         left = rightEdge;
       }
       colorIndicator.style.width = pin.style.left = left + 'px';
-      filter.DEFAULT_VALUE = Math.round(left / slider.offsetWidth * 100);
-      preview.style.filter = filter.value;
+      var percent = Math.round(left / slider.offsetWidth * 100);
+
+      var filter = {
+        chrome: 'grayscale(' + percent / 100 + ')',
+        sepia: 'sepia(' + percent / 100 + ')',
+        marvin: 'invert(' + percent + '%)',
+        phobos: 'blur(' + 3 * percent / 100 + 'px)',
+        heat: 'brightness(' + (1 + 2 * percent / 100) + ')',
+      };
+
+      preview.style.filter = filter[currentFilter]
     }
 
     function onMouseUp() {
@@ -79,31 +70,22 @@
     }
   };
 
-  // click on the track for move pin
-  track.addEventListener('click', function (e) {
-    var shift = e.clientX - slider.getBoundingClientRect().x;
-    if (shift < 0) {
-      shift = 0;
-    }
-    if (shift > slider.offsetWidth) {
-      shift = slider.offsetWidth;
-    }
-      colorIndicator.style.width = pin.style.left = shift + 'px';
-    filter.DEFAULT_VALUE = Math.round(shift / slider.offsetWidth * 100);
-    preview.style.filter = filter.value;
-  });
-
   // color filter
-  var onFocusForm = function (e) {
-    if (e.target.matches('.effects__radio')) {
-      colorIndicator.style.width = pin.style.left = '91px';
-      filter.DEFAULT_VALUE = 20;
-      filter.value = e.target.value;
-      preview.style.filter = filter.value;
+  var onChangeForm = function (e) {
+    preview.className = '';
+      preview.removeAttribute('style');
+    if (e.target.matches('.effects__radio:not(#effect-none)')) {
+      track.hidden = false;
+      colorIndicator.style.width = pin.style.left = slider.offsetWidth + 'px';
+      preview.classList.add('effects__preview--' + e.target.value);
+      currentFilter = e.target.value;
+    }
+    if (e.target.matches('#effect-none')) {
+      track.hidden = true;
     }
   };
 
-  form.addEventListener('focusin', onFocusForm);
+  form.addEventListener('change', onChangeForm);
   window.slider.pin = pin;
   window.slider.colorIndicator = colorIndicator;
   window.slider.decValue = decValue;
