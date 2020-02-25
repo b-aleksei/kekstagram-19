@@ -7,7 +7,6 @@
   };
 
   var main = document.querySelector('.big-picture');
-  // main.classList.remove('hidden');
   var img = main.querySelector('.big-picture__img img');
   var likes = main.querySelector('.likes-count');
   var amountComments = main.querySelector('.comments-count');
@@ -39,7 +38,6 @@
 
   window.request.load(function (response) {
     window.photo.response = response;
-    console.log(response);
     window.main.fillDom(response);
     showPhoto(response[0]);
   });
