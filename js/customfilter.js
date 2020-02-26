@@ -1,0 +1,50 @@
+"use strict";
+
+(function () {
+
+  var RANDOM_MAX = 10;
+  var form = document.querySelector('.img-filters__form');
+  var randomFilter = form.querySelector('#filter-random');
+  var discussedFilter = form.querySelector('#filter-discussed');
+  var picturesContainer = document.querySelector('.pictures');
+  var buttons = form.querySelectorAll('.img-filters__button');
+
+  var randomShuffle = function (arr) {
+    arr.sort(function (a, b) {
+      return Math.random() - 0.5
+    })
+  };
+
+  var rerender = function (e) {
+    buttons.forEach(function (item) {
+      item.classList.remove('img-filters__button--active')
+    });
+
+    if (e.target.matches('.img-filters__button')) {
+      e.target.classList.add('img-filters__button--active')
+    }
+    var pictures = picturesContainer.querySelectorAll('.picture');
+    pictures.forEach(function (item) {
+      item.remove();
+    });
+
+    var response = window.main.response;
+
+    if (e.target === randomFilter) {
+      response = response.slice();
+      randomShuffle(response);
+      response = response.slice(0, RANDOM_MAX)
+    }
+    if (e.target === discussedFilter) {
+      response = response.slice();
+      response.sort(function (a, b) {
+        return b.comments.length - a.comments.length
+      });
+    }
+    window.main.fillDom(response);
+    window.main.filteredResponse = response
+  };
+
+  form.addEventListener('click', rerender);
+
+})();

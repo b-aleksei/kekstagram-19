@@ -2,6 +2,11 @@
 
 (function () {
 
+  window.main = {
+    response: [],
+    filteredResponse: []
+  };
+
   var template = document.querySelector('#picture').content.firstElementChild;
 
   var fillDom = function (arr) {
@@ -26,9 +31,13 @@ var i = 0;
     target.append(fragment)
   };
 
+  window.request.load(function (response) {
+    window.main.response = response;
+    window.main.filteredResponse = response;
+    fillDom(response);
+    document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+  });
 
-  window.main = {
-    fillDom: fillDom
-  };
+  window.main.fillDom = fillDom
 
 })();
