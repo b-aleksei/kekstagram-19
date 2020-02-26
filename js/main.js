@@ -5,11 +5,16 @@
   var template = document.querySelector('#picture').content.firstElementChild;
 
   var fillDom = function (arr) {
+    if (!arr || arr.length === 0) {
+    return
+    }
     var target = document.querySelector('.pictures');
     var fragment = document.createDocumentFragment();
-
+var i = 0;
     arr.forEach(function (item) {
     var clone = template.cloneNode(true);
+    clone.dataset.id = i;
+    i++;
     var img = clone.querySelector('.picture__img');
     var likes = clone.querySelector('.picture__likes');
     var comment = clone.querySelector('.picture__comments');

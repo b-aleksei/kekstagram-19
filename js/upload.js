@@ -1,17 +1,18 @@
 "use strict";
-
+// загрузка фотографии
 (function () {
 
-  var form = document.forms[1];
+  var form = document.querySelector('.img-upload__form');
   var fileChooser = form.querySelector('#upload-file');
   var preview = form.querySelector('.img-upload__preview img');
   var editForm = form.querySelector('.img-upload__overlay');
   var miniPreview = form.querySelectorAll('.effects__preview');
   var btnClose = form.querySelector('#upload-cancel');
-  var pin = window.slider.pin;
-  var colorIndicator = window.slider.colorIndicator;
+  var pin = window.filter.pin;
   var scaleSmaller = form.querySelector('.scale__control--smaller');
   var scaleBigger = form.querySelector('.scale__control--bigger');
+  var hashTag = form.querySelector('.text__hashtags');
+  var comment = form.querySelector('.text__description');
   preview.src = '';
 
   // file upload
@@ -25,9 +26,10 @@
       item.style.backgroundImage = "url('" + URL.createObjectURL(blob) + "')";
     });
 
-    scaleSmaller.addEventListener('click', window.slider.decValue);
-    scaleBigger.addEventListener('click', window.slider.incValue);
-    pin.addEventListener('mousedown', window.slider.onHandlerMouse);
+    scaleSmaller.addEventListener('click', window.filter.decValue);
+    scaleBigger.addEventListener('click', window.filter.incValue);
+    pin.addEventListener('mousedown', window.filter.onHandlerMouse);
+    form.addEventListener('change', window.filter.onChangeForm);
     window.validity.hashTag.addEventListener('input', window.validity.method);
 
     var closePopup = function () {
@@ -36,11 +38,11 @@
       Array.from(miniPreview).forEach(function (item) {
         item.style.backgroundImage = "url('" + URL.revokeObjectURL(blob) + "')";
       });
-      scaleSmaller.removeEventListener('click', window.slider.decValue);
-      scaleBigger.removeEventListener('click', window.slider.incValue);
-      pin.removeEventListener('mousedown', window.slider.onHandlerMouse);
-      colorIndicator.style.width = pin.style.left = '91px';
+      scaleSmaller.removeEventListener('click', window.filter.decValue);
+      scaleBigger.removeEventListener('click', window.filter.incValue);
+      pin.removeEventListener('mousedown', window.filter.onHandlerMouse);
       document.removeEventListener('keydown', closeEsc);
+      form.removeEventListener('change', window.filter.onChangeForm);
       window.validity.hashTag.removeEventListener('input', window.validity.method);
     };
 
@@ -49,7 +51,7 @@
     }, {once: true});
 
     var closeEsc = function (e) {
-      if (e.key === 'Escape' && !e.target.matches('.text__hashtags')) {
+      if (e.key === 'Escape' && e.target !== hashTag && e.target !== comment) {
         editForm.classList.add('hidden');
         closePopup()
       }

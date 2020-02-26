@@ -2,10 +2,10 @@
 
 (function () {
 
-  window.slider = {};
+  window.filter = {};
 
   var SCALE_VALUE = 100;
-  var form = document.forms[1];
+  var form = document.querySelector('.img-upload__form');
   var slider = form.querySelector('.effect-level__line');
   var track = form.querySelector('.img-upload__effect-level');
   var pin = form.querySelector('.effect-level__pin');
@@ -15,27 +15,29 @@
   var scaleIndicator = form.querySelector('.scale__control--value');
   var currentFilter = 'none';
 
+  /*  console.log(slider.style.filter);
+    console.log(slider.style);*/
   track.hidden = true;
 
   // change scale
-  var incValue = function () {
+  window.filter.incValue = function () {
     if (SCALE_VALUE < 100) {
       SCALE_VALUE += 25;
-      preview.style.transform = 'scale(' + SCALE_VALUE + '%)';
+      preview.style.transform = 'scale(' + SCALE_VALUE / 100 + ')';
       scaleIndicator.value = SCALE_VALUE + '%';
     }
   };
 
-  var decValue = function () {
+  window.filter.decValue = function () {
     if (SCALE_VALUE > 25) {
       SCALE_VALUE -= 25;
-      preview.style.transform = 'scale(' + SCALE_VALUE + '%)';
+      preview.style.transform = 'scale(' + SCALE_VALUE / 100 + ')';
       scaleIndicator.value = SCALE_VALUE + '%';
     }
   };
 
   // horizontal slider
-  window.slider.onHandlerMouse = function (e) {
+  window.filter.onHandlerMouse = function (e) {
 
     var shiftX = e.clientX - pin.offsetLeft;
     var rightEdge = slider.offsetWidth;
@@ -52,7 +54,8 @@
         left = rightEdge;
       }
       colorIndicator.style.width = pin.style.left = left + 'px';
-      var percent = effect = Math.round(left / slider.offsetWidth * 100);
+      var percent = effect.value = Math.round(left / slider.offsetWidth * 100);
+      console.log(effect.value);
 
       var filter = {
         chrome: 'grayscale(' + percent / 100 + ')',
@@ -72,9 +75,9 @@
   };
 
   // color filter
-  var onChangeForm = function (e) {
+  window.filter.onChangeForm = function (e) {
     preview.className = '';
-      preview.removeAttribute('style');
+    preview.style.filter = '';
     if (e.target.matches('.effects__radio:not(#effect-none)')) {
       track.hidden = false;
       colorIndicator.style.width = pin.style.left = slider.offsetWidth + 'px';
@@ -86,10 +89,6 @@
     }
   };
 
-  form.addEventListener('change', onChangeForm);
-  window.slider.pin = pin;
-  window.slider.colorIndicator = colorIndicator;
-  window.slider.decValue = decValue;
-  window.slider.incValue = incValue;
+  window.filter.pin = pin;
 
 })();
