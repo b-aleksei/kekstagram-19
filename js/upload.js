@@ -1,8 +1,8 @@
 "use strict";
-
+// загрузка фотографии
 (function () {
 
-  var form = document.forms[1];
+  var form = document.querySelector('.img-upload__form');
   var fileChooser = form.querySelector('#upload-file');
   var preview = form.querySelector('.img-upload__preview img');
   var editForm = form.querySelector('.img-upload__overlay');
@@ -11,6 +11,8 @@
   var pin = window.filter.pin;
   var scaleSmaller = form.querySelector('.scale__control--smaller');
   var scaleBigger = form.querySelector('.scale__control--bigger');
+  var hashTag = form.querySelector('.text__hashtags');
+  var comment = form.querySelector('.text__description');
   preview.src = '';
 
   // file upload
@@ -49,7 +51,7 @@
     }, {once: true});
 
     var closeEsc = function (e) {
-      if (e.key === 'Escape' && !e.target.matches('.text__hashtags')) {
+      if (e.key === 'Escape' && e.target !== hashTag && e.target !== comment) {
         editForm.classList.add('hidden');
         closePopup()
       }

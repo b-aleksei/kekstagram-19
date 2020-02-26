@@ -5,7 +5,7 @@
   window.filter = {};
 
   var SCALE_VALUE = 100;
-  var form = document.forms[1];
+  var form = document.querySelector('.img-upload__form');
   var slider = form.querySelector('.effect-level__line');
   var track = form.querySelector('.img-upload__effect-level');
   var pin = form.querySelector('.effect-level__pin');

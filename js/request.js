@@ -5,11 +5,11 @@
   var TIMEOUT_MS = 2000;
   var DELAY_ERROR_MS = 2000;
   var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
+  var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
   var errorType = {
-    200: 'OK',
-    404: 'Cтраница не найдена, проверьте коректность адреса',
-    500: 'Сервер временно не доступен, скоро все заработает',
-    unknown: 'Неизвестная ошибка, попробуйте позднее',
+    OK: 200,
+    PAGE_NOT_FOUND: 404,
+    SERVER_ERROR: 500
   };
 
   var handlerFailQuery = function (errorMessage) {
@@ -28,17 +28,17 @@
 
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
-        case 200 :
+        case errorType.OK :
           success(xhr.response);
           break;
-        case 404 :
-          error(xhr.status + ' ' + errorType[404]);
+        case errorType.PAGE_NOT_FOUND :
+          error(xhr.status + 'Страница не найдена, проверьте корректность адреса');
           break;
-        case 500 :
-          error(xhr.status + ' ' + errorType[500]);
+        case errorType.SERVER_ERROR :
+          error(xhr.status + 'Сервер временно не доступен, скоро все заработает');
           break;
         default :
-          error(xhr.status + ' ' + errorType.unknown);
+          error(xhr.status + 'Неизвестная ошибка, попробуйте позднее');
       }
     }, {once: true});
 
@@ -47,7 +47,7 @@
     }, {once: true});
 
     xhr.addEventListener('timeout', function () {
-      error('Запрос не успел выполниться за ' + xhr.timeout + 'мс. Попробуйте снова.');
+      error('Запрос не успел выполниться за ' + xhr.timeout + 'мс. Обновите страницу.');
     }, {once: true});
 
     return xhr;
@@ -65,7 +65,7 @@
   var upload = function (data, success, error) {
     var errorHandler = error || handlerFailQuery;
     var xhr = startRequest(success, errorHandler);
-    xhr.open('post', document.forms[1].action);
+    xhr.open('post', URL_UPLOAD);
     xhr.send(data);
   };
 
