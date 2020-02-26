@@ -15,13 +15,15 @@
   var scaleIndicator = form.querySelector('.scale__control--value');
   var currentFilter = 'none';
 
+  /*  console.log(slider.style.filter);
+    console.log(slider.style);*/
   track.hidden = true;
 
   // change scale
   window.filter.incValue = function () {
     if (SCALE_VALUE < 100) {
       SCALE_VALUE += 25;
-      preview.style.transform = 'scale(' + SCALE_VALUE + '%)';
+      preview.style.transform = 'scale(' + SCALE_VALUE / 100 + ')';
       scaleIndicator.value = SCALE_VALUE + '%';
     }
   };
@@ -29,7 +31,7 @@
   window.filter.decValue = function () {
     if (SCALE_VALUE > 25) {
       SCALE_VALUE -= 25;
-      preview.style.transform = 'scale(' + SCALE_VALUE + '%)';
+      preview.style.transform = 'scale(' + SCALE_VALUE / 100 + ')';
       scaleIndicator.value = SCALE_VALUE + '%';
     }
   };
@@ -52,7 +54,8 @@
         left = rightEdge;
       }
       colorIndicator.style.width = pin.style.left = left + 'px';
-      var percent = effect = Math.round(left / slider.offsetWidth * 100);
+      var percent = effect.value = Math.round(left / slider.offsetWidth * 100);
+      console.log(effect.value);
 
       var filter = {
         chrome: 'grayscale(' + percent / 100 + ')',
@@ -74,7 +77,7 @@
   // color filter
   window.filter.onChangeForm = function (e) {
     preview.className = '';
-      preview.removeAttribute('style');
+    preview.style.filter = '';
     if (e.target.matches('.effects__radio:not(#effect-none)')) {
       track.hidden = false;
       colorIndicator.style.width = pin.style.left = slider.offsetWidth + 'px';
