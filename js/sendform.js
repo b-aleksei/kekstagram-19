@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 (function () {
 
@@ -31,14 +31,14 @@
     preloader.style.cssText = 'position: fixed; top: 50%; left:50%; z-index:999;';
     document.body.append(preloader);
     window.request.upload(new FormData(form), function () {
-      messageSend(success)
+      messageSend(success);
     }, function () {
-      messageSend(error)
-    })
+      messageSend(error);
+    });
   };
 
   window.sendform = {
     onsubmit: onsubmit
-  }
+  };
 
 })();

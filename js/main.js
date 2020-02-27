@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 (function () {
 
@@ -11,24 +11,24 @@
 
   var fillDom = function (arr) {
     if (!arr || arr.length === 0) {
-    return
+      return;
     }
     var target = document.querySelector('.pictures');
     var fragment = document.createDocumentFragment();
-var i = 0;
+    var i = 0;
     arr.forEach(function (item) {
-    var clone = template.cloneNode(true);
-    clone.dataset.id = i;
-    i++;
-    var img = clone.querySelector('.picture__img');
-    var likes = clone.querySelector('.picture__likes');
-    var comment = clone.querySelector('.picture__comments');
+      var clone = template.cloneNode(true);
+      clone.dataset.id = i;
+      i++;
+      var img = clone.querySelector('.picture__img');
+      var likes = clone.querySelector('.picture__likes');
+      var comment = clone.querySelector('.picture__comments');
       img.src = item.url;
       likes.textContent = item.likes;
       comment.textContent = item.comments.length;
-      fragment.append(clone)
+      fragment.append(clone);
     });
-    target.append(fragment)
+    target.append(fragment);
   };
 
   window.request.load(function (response) {
@@ -38,6 +38,6 @@ var i = 0;
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   });
 
-  window.main.fillDom = fillDom
+  window.main.fillDom = fillDom;
 
 })();

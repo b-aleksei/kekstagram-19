@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 (function () {
 
@@ -12,9 +12,9 @@
   var buttons = form.querySelectorAll('.img-filters__button');
 
   var randomShuffle = function (arr) {
-    arr.sort(function (a, b) {
-      return Math.random() - 0.5
-    })
+    arr.sort(function () {
+      return Math.random() - 0.5;
+    });
   };
 
   var rerender = function (e) {
@@ -28,29 +28,29 @@
     if (e.target === randomFilter) {
       response = response.slice();
       randomShuffle(response);
-      response = response.slice(0, RANDOM_MAX)
+      response = response.slice(0, RANDOM_MAX);
     }
     if (e.target === discussedFilter) {
       response = response.slice();
       response.sort(function (a, b) {
-        return b.comments.length - a.comments.length
+        return b.comments.length - a.comments.length;
       });
     }
     window.main.fillDom(response);
-    window.main.filteredResponse = response
+    window.main.filteredResponse = response;
   };
 
   form.addEventListener('click', function (e) {
     buttons.forEach(function (item) {
-      item.classList.remove('img-filters__button--active')
+      item.classList.remove('img-filters__button--active');
     });
 
     if (e.target.matches('.img-filters__button')) {
-      e.target.classList.add('img-filters__button--active')
+      e.target.classList.add('img-filters__button--active');
     }
 
     if (time) {
-      clearTimeout(time)
+      clearTimeout(time);
     }
     time = setTimeout(rerender, DEBOUNCE_INTERVAL, e);
   });

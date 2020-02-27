@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 // загрузка фотографии
 (function () {
 
@@ -24,7 +24,7 @@
     var blob = new Blob([file]);
     preview.src = URL.createObjectURL(blob);
     Array.from(miniPreview).forEach(function (item) {
-      item.style.backgroundImage = "url('" + URL.createObjectURL(blob) + "')";
+      item.style.backgroundImage = 'url(\'' + URL.createObjectURL(blob) + '\')';
     });
 
     scaleSmaller.addEventListener('click', window.filter.decValue);
@@ -37,7 +37,7 @@
       editForm.classList.add('hidden');
       preview.src = URL.revokeObjectURL(blob);
       Array.from(miniPreview).forEach(function (item) {
-        item.style.backgroundImage = "url('" + URL.revokeObjectURL(blob) + "')";
+        item.style.backgroundImage = 'url(\'' + URL.revokeObjectURL(blob) + '\')';
       });
       scaleSmaller.removeEventListener('click', window.filter.decValue);
       scaleBigger.removeEventListener('click', window.filter.incValue);
@@ -50,26 +50,27 @@
     };
 
     btnClose.addEventListener('click', function () {
-      closePopup()
+      closePopup();
     }, {once: true});
 
     var closeEsc = function (e) {
       if (e.key === 'Escape' && e.target !== hashTag && e.target !== comment) {
         editForm.classList.add('hidden');
-        closePopup()
+        closePopup();
       }
     };
 
+    // когда таб переходит во время открытого окнана на документ не должны открываться картинки по enter
     var openEnter = function (e) {
       if (e.key === 'Enter' && !e.target.closest('.img-upload__overlay')) {
-        e.preventDefault()
+        e.preventDefault();
       }
     };
 
     document.addEventListener('keydown', closeEsc);
     document.addEventListener('keydown', openEnter);
 
-    form.addEventListener('submit', window.sendform.onsubmit)
+    form.addEventListener('submit', window.sendform.onsubmit);
 
   });
 

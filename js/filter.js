@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 (function () {
 
@@ -62,7 +62,7 @@
         heat: 'brightness(' + (1 + 2 * percent / 100) + ')',
       };
 
-      preview.style.filter = filter[currentFilter]
+      preview.style.filter = filter[currentFilter];
     }
 
     function onMouseUp() {
