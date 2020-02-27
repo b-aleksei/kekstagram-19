@@ -3,6 +3,8 @@
 (function () {
 
   var RANDOM_MAX = 10;
+  var DEBOUNCE_INTERVAL = 500;
+  var time = null;
   var form = document.querySelector('.img-filters__form');
   var randomFilter = form.querySelector('#filter-random');
   var discussedFilter = form.querySelector('#filter-discussed');
@@ -16,19 +18,12 @@
   };
 
   var rerender = function (e) {
-    buttons.forEach(function (item) {
-      item.classList.remove('img-filters__button--active')
-    });
 
-    if (e.target.matches('.img-filters__button')) {
-      e.target.classList.add('img-filters__button--active')
-    }
+    var response = window.main.response;
     var pictures = picturesContainer.querySelectorAll('.picture');
     pictures.forEach(function (item) {
       item.remove();
     });
-
-    var response = window.main.response;
 
     if (e.target === randomFilter) {
       response = response.slice();
@@ -45,6 +40,20 @@
     window.main.filteredResponse = response
   };
 
-  form.addEventListener('click', rerender);
+  form.addEventListener('click', function (e) {
+    buttons.forEach(function (item) {
+      item.classList.remove('img-filters__button--active')
+    });
+
+    if (e.target.matches('.img-filters__button')) {
+      e.target.classList.add('img-filters__button--active')
+    }
+
+    if (time) {
+      clearTimeout(time)
+    }
+    time = setTimeout(rerender, DEBOUNCE_INTERVAL, e);
+  });
 
 })();
+

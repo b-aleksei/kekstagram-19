@@ -13,8 +13,7 @@
   var scaleBigger = form.querySelector('.scale__control--bigger');
   var hashTag = form.querySelector('.text__hashtags');
   var comment = form.querySelector('.text__description');
-  // var submit = form.querySelector('.upload-submit');
-  var preloader;
+
   preview.src = '';
 
   // file upload
@@ -45,7 +44,7 @@
       pin.removeEventListener('mousedown', window.filter.onHandlerMouse);
       document.removeEventListener('keydown', closeEsc);
       form.removeEventListener('change', window.filter.onChangeForm);
-      form.removeEventListener('submit', onsubmit);
+      form.removeEventListener('submit', window.sendform.onsubmit);
       window.validity.hashTag.removeEventListener('input', window.validity.method);
     };
 
@@ -60,23 +59,10 @@
       }
     };
 
-    var successSend = function () {
-      preloader.remove();
-    }
-
-    var onsubmit = function (evt) {
-      evt.preventDefault();
-      preloader = document.createElement('img');
-      preloader.src = 'img/preloader.gif';
-      preloader.style.cssText = 'position: fixed; top: 50%; left:50%; z-index:999;';
-      document.body.append(preloader);
-      window.request.upload(new FormData(form), successSend)
-    };
-
     document.addEventListener('keydown', closeEsc);
 
-    form.addEventListener('submit', onsubmit)
+    form.addEventListener('submit', window.sendform.onsubmit)
 
   });
-  // window.request
+
 })();
