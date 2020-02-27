@@ -34,7 +34,7 @@
           break;
         }
       }
-      currentComments.innerText = blockComments.children.length;
+      currentComments.innerText = i;
       if (i === arrComment.length) {
         btnAddComment.classList.add('hidden');
       }
