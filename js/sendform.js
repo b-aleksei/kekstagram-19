@@ -6,6 +6,9 @@
   var editForm = form.querySelector('.img-upload__overlay');
   var success = document.querySelector('#success').content.firstElementChild;
   var error = document.querySelector('#error').content.firstElementChild;
+  var hashTag = form.querySelector('.text__hashtags');
+  var comment = form.querySelector('.text__description');
+  var defaulInput = form.querySelector('#effect-none');
   var preloader;
 
   var messageSend = function (status) {
@@ -22,6 +25,10 @@
         clone.remove();
       }
     }, {once: true});
+    hashTag.value = '';
+    comment.value = '';
+    defaulInput.checked = true;
+    window.filter.track.hidden = true;
   };
 
   var onsubmit = function (evt) {

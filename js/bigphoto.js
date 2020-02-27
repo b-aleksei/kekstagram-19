@@ -14,29 +14,32 @@
   var btnAddComment = bigPicture.querySelector('.social__comments-loader');
   var currentComments = bigPicture.querySelector('#currentComments');
   var likeCount = bigPicture.querySelector('.likes-count');
+  blockComments.innerHTML = '';
   var data;
   var id;
   var addComment;
 
   var createComment = function (arrComment) {
     btnAddComment.classList.remove('hidden');
-    blockComments.innerHTML = '';
     var i = 0;
     return function () {
+      console.log(i);
       while (i < arrComment.length) {
         var node = templateComment.cloneNode(true);
         node.children[0].src = arrComment[i].avatar;
         node.children[0].alt = arrComment[i].name;
         node.children[1].textContent = arrComment[i].message;
         blockComments.append(node);
-        i++;
+        ++i;
         if (i % 5 === 0) {
           break;
         }
       }
+      console.log('finish i: ', i);
       currentComments.innerText = i;
       if (i === arrComment.length) {
         btnAddComment.classList.add('hidden');
+        i = 0;
       }
     };
   };
@@ -48,12 +51,12 @@
     img.src = obj.url;
     likes.textContent = obj.likes;
     description.textContent = obj.description;
-    amountComments.textContent = obj.comments.length;
+    amountComments.textContent = obj.comments.length + '';
     addComment = createComment(obj.comments);
     addComment();
     bigPicture.classList.remove('hidden');
     // eslint-disable-next-line
-    data[id].like ? likeCount.classList.add('likes-count--active') : likeCount.classList.remove('likes-count--active');
+    // data[id].like ? likeCount.classList.add('likes-count--active') : likeCount.classList.remove('likes-count--active');
     document.body.classList.add('modal-open');
     btnAddComment.addEventListener('click', addComment);
   };
@@ -65,6 +68,7 @@
       id = image.dataset.id;
       data = window.main.filteredResponse;
       showPhoto(data[id]);
+      console.log(data[id]);
 
       close.addEventListener('click', function () {
         closePopup();
@@ -78,12 +82,12 @@
 
       document.addEventListener('keydown', openEnter);
 
-      likeCount.addEventListener('click', onAddLike);
+      // likeCount.addEventListener('click', onAddLike);
     }
   };
 
   // добавление лайков
-  var onAddLike = function () {
+/*  var onAddLike = function () {
     likeCount.classList.toggle('likes-count--active');
     if (!data[id].like) {
       data[id].likes += 1;
@@ -93,13 +97,14 @@
       data[id].like = false;
     }
     likes.innerText = data[id].likes;
-  };
+  };*/
 
   var closePopup = function () {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
-    likeCount.removeEventListener('click', onAddLike);
+    // likeCount.removeEventListener('click', onAddLike);
     document.removeEventListener('keydown', openEnter);
+    blockComments.innerHTML = '';
   };
 
   var openEnter = function (e) {

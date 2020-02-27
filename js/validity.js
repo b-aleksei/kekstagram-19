@@ -21,9 +21,9 @@
         clone = tag;
       } else {
         hashTag.setCustomValidity('Хештег ' + (i + 1) + ' уже существует');
-        continue;
+        break;
       }
-      if (!tag.match(/(^#\w+)(?!\S)/)) {
+      if (!tag.match(/(^#[A-Za-z0-9]+)(?!\S)/)) {
         hashTag.setCustomValidity('хештег ' + (i + 1) + ' должен начинаться с # и не содержать пробелы, спецсимволы (#, @, $ и т.п.)');
       }
       if (tag.length > 20) {

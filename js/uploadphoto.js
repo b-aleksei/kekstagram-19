@@ -4,9 +4,10 @@
 
   var form = document.querySelector('.img-upload__form');
   var fileChooser = form.querySelector('#upload-file');
-  var preview = form.querySelector('.img-upload__preview img');
+  var img = form.querySelector('.img-upload__preview img');
+  var preview = form.querySelector('.img-upload__preview');
   var editForm = form.querySelector('.img-upload__overlay');
-  var miniPreview = form.querySelectorAll('.effects__preview');
+  var miniPreview = form.querySelectorAll('.effects__img');
   var btnClose = form.querySelector('#upload-cancel');
   var pin = window.filter.pin;
   var scaleSmaller = form.querySelector('.scale__control--smaller');
@@ -14,7 +15,7 @@
   var hashTag = form.querySelector('.text__hashtags');
   var comment = form.querySelector('.text__description');
 
-  preview.src = '';
+  img.src = '';
 
   // file upload
   fileChooser.addEventListener('change', function () {
@@ -22,7 +23,7 @@
     editForm.classList.remove('hidden');
     document.body.classList.add('modal-open');
     var blob = new Blob([file]);
-    preview.src = URL.createObjectURL(blob);
+    img.src = URL.createObjectURL(blob);
     Array.from(miniPreview).forEach(function (item) {
       item.style.backgroundImage = 'url(\'' + URL.createObjectURL(blob) + '\')';
     });
@@ -35,7 +36,7 @@
 
     var closePopup = function () {
       editForm.classList.add('hidden');
-      preview.src = URL.revokeObjectURL(blob);
+      img.src = URL.revokeObjectURL(blob);
       Array.from(miniPreview).forEach(function (item) {
         item.style.backgroundImage = 'url(\'' + URL.revokeObjectURL(blob) + '\')';
       });
@@ -47,6 +48,8 @@
       form.removeEventListener('submit', window.sendform.onsubmit);
       document.removeEventListener('keydown', openEnter);
       window.validity.hashTag.removeEventListener('input', window.validity.method);
+      preview.style.transform = '';
+      window.filter.track.hidden = true;
     };
 
     btnClose.addEventListener('click', function () {
