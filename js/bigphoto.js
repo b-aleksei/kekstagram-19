@@ -71,6 +71,8 @@
         }
       }, {once: true});
 
+      document.addEventListener('keydown', openEnter);
+
       likeCount.addEventListener('click', onAddLike);
     }
   };
@@ -84,6 +86,13 @@
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
     likeCount.removeEventListener('click', onAddLike);
+    document.removeEventListener('keydown', openEnter);
+  };
+
+  var openEnter = function (e) {
+    if (e.key === 'Enter' && !e.target.closest('.big-picture')) {
+      e.preventDefault();
+    }
   };
 
   imgContainer.addEventListener('click', onShowPhoto);
