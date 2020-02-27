@@ -45,6 +45,7 @@
       document.removeEventListener('keydown', closeEsc);
       form.removeEventListener('change', window.filter.onChangeForm);
       form.removeEventListener('submit', window.sendform.onsubmit);
+      document.removeEventListener('keydown', openEnter);
       window.validity.hashTag.removeEventListener('input', window.validity.method);
     };
 
@@ -59,7 +60,14 @@
       }
     };
 
+    var openEnter = function (e) {
+      if (e.key === 'Enter' && !e.target.closest('.img-upload__overlay')) {
+        e.preventDefault()
+      }
+    };
+
     document.addEventListener('keydown', closeEsc);
+    document.addEventListener('keydown', openEnter);
 
     form.addEventListener('submit', window.sendform.onsubmit)
 
