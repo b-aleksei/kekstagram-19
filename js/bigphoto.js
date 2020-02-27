@@ -52,6 +52,7 @@
     addComment = createComment(obj.comments);
     addComment();
     bigPicture.classList.remove('hidden');
+    // eslint-disable-next-line
     data[id].like ? likeCount.classList.add('likes-count--active') : likeCount.classList.remove('likes-count--active');
     document.body.classList.add('modal-open');
     btnAddComment.addEventListener('click', addComment);
