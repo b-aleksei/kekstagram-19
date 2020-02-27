@@ -13,6 +13,7 @@
   var scaleBigger = form.querySelector('.scale__control--bigger');
   var hashTag = form.querySelector('.text__hashtags');
   var comment = form.querySelector('.text__description');
+
   preview.src = '';
 
   // file upload
@@ -43,6 +44,7 @@
       pin.removeEventListener('mousedown', window.filter.onHandlerMouse);
       document.removeEventListener('keydown', closeEsc);
       form.removeEventListener('change', window.filter.onChangeForm);
+      form.removeEventListener('submit', window.sendform.onsubmit);
       window.validity.hashTag.removeEventListener('input', window.validity.method);
     };
 
@@ -58,6 +60,9 @@
     };
 
     document.addEventListener('keydown', closeEsc);
+
+    form.addEventListener('submit', window.sendform.onsubmit)
+
   });
 
 })();

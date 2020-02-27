@@ -2,10 +2,6 @@
 // показ фотографии в полноэкранном режиме
 (function () {
 
-  window.photo = {
-    response: []
-  };
-
   var bigPicture = document.querySelector('.big-picture');
   var img = bigPicture.querySelector('.big-picture__img img');
   var likes = bigPicture.querySelector('.likes-count');
@@ -18,6 +14,8 @@
   var btnAddComment = bigPicture.querySelector('.social__comments-loader');
   var currentComments = bigPicture.querySelector('#currentComments');
   var likeCount = bigPicture.querySelector('.likes-count');
+  var userComment = document.querySelector('.social__footer-text');
+  var addUserComment = document.querySelector('.social__footer-btn');
   var addComment;
 
   var createComment = function (arrComment) {
@@ -59,19 +57,12 @@
     btnAddComment.addEventListener('click', addComment);
   };
 
-  window.request.load(function (response) {
-    window.photo.response = response;
-    console.log(response);
-    window.main.fillDom(response);
-
-  });
-
   // обработчик показа фото на весь экран
   var onShowPhoto = function (e) {
     var img = e.target.closest('.picture');
     if (img) {
       var i = img.dataset.id;
-      showPhoto(window.photo.response[i]);
+      showPhoto(window.main.filteredResponse[i]);
 
       close.addEventListener('click', function () {
         closePopup()

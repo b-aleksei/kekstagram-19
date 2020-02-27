@@ -15,8 +15,6 @@
   var scaleIndicator = form.querySelector('.scale__control--value');
   var currentFilter = 'none';
 
-  /*  console.log(slider.style.filter);
-    console.log(slider.style);*/
   track.hidden = true;
 
   // change scale
@@ -55,7 +53,6 @@
       }
       colorIndicator.style.width = pin.style.left = left + 'px';
       var percent = effect.value = Math.round(left / slider.offsetWidth * 100);
-      console.log(effect.value);
 
       var filter = {
         chrome: 'grayscale(' + percent / 100 + ')',
