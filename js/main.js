@@ -32,8 +32,10 @@
   };
 
   window.request.load(function (response) {
-    window.main.response = response;
-    window.main.filteredResponse = response;
+    response.forEach(function (item) {
+      item.like = false;
+    });
+    window.main.filteredResponse = window.main.response = response;
     fillDom(response);
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   });

@@ -14,21 +14,9 @@
   var btnAddComment = bigPicture.querySelector('.social__comments-loader');
   var currentComments = bigPicture.querySelector('#currentComments');
   var likeCount = bigPicture.querySelector('.likes-count');
-  var userComment = document.querySelector('.social__footer-text');
-  var btnUserComment = document.querySelector('.social__footer-btn');
-  var avatarUserComment = document.querySelector('.social__footer img');
+  var data;
+  var id;
   var addComment;
-
-  var addUserComment = function () {
-    var node = templateComment.cloneNode(true);
-    node.children[0].src = avatarUserComment.src;
-    node.children[0].alt = avatarUserComment.alt;
-    node.children[1].textContent = userComment.value;
-    blockComments.append(node);
-    userComment.value = '';
-    currentComments.innerText = +currentComments.innerText + 1 + '';
-    amountComments.textContent = +amountComments.innerText + 1 + '';
-  };
 
   var createComment = function (arrComment) {
     btnAddComment.classList.remove('hidden');
@@ -64,6 +52,7 @@
     addComment = createComment(obj.comments);
     addComment();
     bigPicture.classList.remove('hidden');
+    data[id].like ? likeCount.classList.add('likes-count--active') : likeCount.classList.remove('likes-count--active');
     document.body.classList.add('modal-open');
     btnAddComment.addEventListener('click', addComment);
   };
@@ -72,8 +61,9 @@
   var onShowPhoto = function (e) {
     var image = e.target.closest('.picture');
     if (image) {
-      var i = image.dataset.id;
-      showPhoto(window.main.filteredResponse[i]);
+      id = image.dataset.id;
+      data = window.main.filteredResponse;
+      showPhoto(data[id]);
 
       close.addEventListener('click', function () {
         closePopup();
@@ -88,14 +78,20 @@
       document.addEventListener('keydown', openEnter);
 
       likeCount.addEventListener('click', onAddLike);
-
-      btnUserComment.addEventListener('click', addUserComment);
     }
   };
 
+  // добавление лайков
   var onAddLike = function () {
     likeCount.classList.toggle('likes-count--active');
-    likeCount.innerText = (likeCount.matches('.likes-count--active')) ? +likeCount.innerText + 1 : +likeCount.innerText - 1;
+    if (!data[id].like) {
+      data[id].likes += 1;
+      data[id].like = true;
+    } else {
+      data[id].likes -= 1;
+      data[id].like = false;
+    }
+    likes.innerText = data[id].likes;
   };
 
   var closePopup = function () {
@@ -103,7 +99,6 @@
     document.body.classList.remove('modal-open');
     likeCount.removeEventListener('click', onAddLike);
     document.removeEventListener('keydown', openEnter);
-    btnUserComment.removeEventListener('click', addUserComment);
   };
 
   var openEnter = function (e) {
