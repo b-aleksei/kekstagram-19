@@ -23,7 +23,7 @@
         hashTag.setCustomValidity('Хештег ' + (i + 1) + ' уже существует');
         break;
       }
-      if (!tag.match(/(^#[A-Za-z0-9]+)(?!\S)/)) {
+      if (!tag.match(/^#[^\W_]+(?!\S)/)) {
         hashTag.setCustomValidity('хештег ' + (i + 1) + ' должен начинаться с # и не содержать пробелы, спецсимволы (#, @, $ и т.п.)');
       }
       if (tag.length > 20) {
