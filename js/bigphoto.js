@@ -13,7 +13,6 @@
   var imgContainer = document.body.querySelector('.pictures');
   var btnAddComment = bigPicture.querySelector('.social__comments-loader');
   var currentComments = bigPicture.querySelector('#currentComments');
-  var likeCount = bigPicture.querySelector('.likes-count');
   var userComment = bigPicture.querySelector('.social__footer-text');
   blockComments.innerHTML = '';
   var data;
@@ -48,8 +47,6 @@
     likes.textContent = obj.likes;
     description.textContent = obj.description;
     amountComments.textContent = obj.comments.length + '';
-    // eslint-disable-next-line
-    data[id].like ? likeCount.classList.add('likes-count--active') : likeCount.classList.remove('likes-count--active');
     bigPicture.classList.remove('hidden');
     document.body.classList.add('modal-open');
     btnAddComment.classList.remove('hidden');
@@ -71,29 +68,13 @@
       document.addEventListener('keydown', closeEscape);
 
       document.addEventListener('keydown', openEnter);
-
-      likeCount.addEventListener('click', onAddLike);
     }
-  };
-
-  // добавление лайков
-  var onAddLike = function () {
-    likeCount.classList.toggle('likes-count--active');
-    if (!data[id].like) {
-      data[id].likes += 1;
-      data[id].like = true;
-    } else {
-      data[id].likes -= 1;
-      data[id].like = false;
-    }
-    likes.innerText = data[id].likes;
   };
 
   var closePopup = function () {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
     blockComments.innerHTML = '';
-    likeCount.removeEventListener('click', onAddLike);
     document.removeEventListener('keydown', openEnter);
     btnAddComment.removeEventListener('click', addComment);
     document.removeEventListener('keydown', closeEscape);

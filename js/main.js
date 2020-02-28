@@ -32,9 +32,6 @@
   };
 
   window.request.load(function (response) {
-    response.forEach(function (item) {
-      item.like = false;
-    });
     window.main.filteredResponse = window.main.response = response;
     fillDom(response);
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
