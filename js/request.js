@@ -12,7 +12,7 @@
     SERVER_ERROR: 500
   };
 
-  var handlerFailQuery = function (errorMessage) {
+  var handleFailQuery = function (errorMessage) {
     var node = document.createElement('div');
     node.style.cssText = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red; position: fixed;' +
       ' left: 0; right: 0; font-size: 30px';
@@ -54,7 +54,7 @@
   };
 
   var load = function (success, error) {
-    var errorHandler = error || handlerFailQuery;
+    var errorHandler = error || handleFailQuery;
     var xhr = startRequest(success, errorHandler);
     xhr.responseType = 'json';
     xhr.timeout = TIMEOUT_MS;
@@ -63,7 +63,7 @@
   };
 
   var upload = function (data, success, error) {
-    var errorHandler = error || handlerFailQuery;
+    var errorHandler = error || handleFailQuery;
     var xhr = startRequest(success, errorHandler);
     xhr.open('post', URL_UPLOAD);
     xhr.send(data);
@@ -72,7 +72,6 @@
   window.request = {
     load: load,
     upload: upload,
-    handlerFailQuery: handlerFailQuery,
   };
 
 })();

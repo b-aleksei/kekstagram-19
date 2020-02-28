@@ -5,6 +5,11 @@
   window.filter = {};
 
   var SCALE_VALUE = 100;
+  var SCALE_MIN_VALUE = 25;
+  var PERCENT_MAX_VALUE = 100;
+  var BLUR_MAX_VALUE = 3;
+  var BRIGHTNESS_MIN_VALUE = 1;
+  var BRIGHTNESS_MAX_VALUE = 2;
   var form = document.querySelector('.img-upload__form');
   var slider = form.querySelector('.effect-level__line');
   var track = form.querySelector('.img-upload__effect-level');
@@ -20,17 +25,17 @@
 
   // change scale
   window.filter.incValue = function () {
-    if (SCALE_VALUE < 100) {
-      SCALE_VALUE += 25;
-      preview.style.transform = 'scale(' + SCALE_VALUE / 100 + ')';
+    if (SCALE_VALUE < PERCENT_MAX_VALUE) {
+      SCALE_VALUE += SCALE_MIN_VALUE;
+      preview.style.transform = 'scale(' + SCALE_VALUE / PERCENT_MAX_VALUE + ')';
       scaleIndicator.value = SCALE_VALUE + '%';
     }
   };
 
   window.filter.decValue = function () {
-    if (SCALE_VALUE > 25) {
-      SCALE_VALUE -= 25;
-      preview.style.transform = 'scale(' + SCALE_VALUE / 100 + ')';
+    if (SCALE_VALUE > SCALE_MIN_VALUE) {
+      SCALE_VALUE -= SCALE_MIN_VALUE;
+      preview.style.transform = 'scale(' + SCALE_VALUE / PERCENT_MAX_VALUE + ')';
       scaleIndicator.value = SCALE_VALUE + '%';
     }
   };
@@ -44,7 +49,7 @@
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onMouseUp);
 
-    function onMove(evt) {
+    var onMove = function (evt) {
       var left = evt.clientX - shiftX;
       if (left < 0) {
         left = 0;
@@ -56,17 +61,17 @@
       var percent = effect.value = Math.round(left / slider.offsetWidth * 100);
 
       var filter = {
-        chrome: 'grayscale(' + percent / 100 + ')',
-        sepia: 'sepia(' + percent / 100 + ')',
+        chrome: 'grayscale(' + percent / PERCENT_MAX_VALUE + ')',
+        sepia: 'sepia(' + percent / PERCENT_MAX_VALUE + ')',
         marvin: 'invert(' + percent + '%)',
-        phobos: 'blur(' + 3 * percent / 100 + 'px)',
-        heat: 'brightness(' + (1 + 2 * percent / 100) + ')',
+        phobos: 'blur(' + BLUR_MAX_VALUE * percent / PERCENT_MAX_VALUE + 'px)',
+        heat: 'brightness(' + (BRIGHTNESS_MIN_VALUE + BRIGHTNESS_MAX_VALUE * percent / PERCENT_MAX_VALUE) + ')',
       };
 
       img.style.filter = filter[currentFilter];
-    }
+    };
 
-    function onMouseUp() {
+    var onMouseUp = function () {
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onMouseUp);
     }

@@ -32,16 +32,13 @@
         break;
       }
     }
-    currentComments.innerText = i;
+    currentComments.textContent = i;
     if (i === arrComment.length) {
       btnAddComment.classList.add('hidden');
     }
   };
 
   var showPhoto = function (obj) {
-    if (obj === undefined || !Object.keys(obj).length) {
-      return;
-    }
     i = 0;
     img.src = obj.url;
     likes.textContent = obj.likes;
