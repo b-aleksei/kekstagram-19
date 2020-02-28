@@ -14,15 +14,36 @@
   var btnAddComment = bigPicture.querySelector('.social__comments-loader');
   var currentComments = bigPicture.querySelector('#currentComments');
   var likeCount = bigPicture.querySelector('.likes-count');
+  var userComment = bigPicture.querySelector('.social__footer-text');
   blockComments.innerHTML = '';
   var data;
   var id;
-  var addComment;
+  var arrComment = [];
+  var i = 0;
+
+  var addComment = function () {
+    while (i < arrComment.length) {
+      var node = templateComment.cloneNode(true);
+      node.children[0].src = arrComment[i].avatar;
+      node.children[0].alt = arrComment[i].name;
+      node.children[1].textContent = arrComment[i].message;
+      blockComments.append(node);
+      ++i;
+      if (i % 5 === 0) {
+        break;
+      }
+    }
+    currentComments.innerText = i;
+    if (i === arrComment.length) {
+      btnAddComment.classList.add('hidden');
+    }
+  };
 
   var showPhoto = function (obj) {
     if (obj === undefined || !Object.keys(obj).length) {
       return;
     }
+    i = 0;
     img.src = obj.url;
     likes.textContent = obj.likes;
     description.textContent = obj.description;
@@ -32,26 +53,7 @@
     bigPicture.classList.remove('hidden');
     document.body.classList.add('modal-open');
     btnAddComment.classList.remove('hidden');
-    var arrComment = obj.comments;
-    var i = 0;
-
-    return function () {
-      while (i < arrComment.length) {
-        var node = templateComment.cloneNode(true);
-        node.children[0].src = arrComment[i].avatar;
-        node.children[0].alt = arrComment[i].name;
-        node.children[1].textContent = arrComment[i].message;
-        blockComments.append(node);
-        ++i;
-        if (i % 5 === 0) {
-          break;
-        }
-      }
-      currentComments.innerText = i;
-      if (i === arrComment.length) {
-        btnAddComment.classList.add('hidden');
-      }
-    };
+    arrComment = obj.comments;
   };
 
   // обработчик показа фото на весь экран
@@ -60,19 +62,13 @@
     if (image) {
       id = image.dataset.id;
       data = window.main.filteredResponse;
-      addComment = showPhoto(data[id]);
+      showPhoto(data[id]);
       addComment();
       btnAddComment.addEventListener('click', addComment);
 
-      close.addEventListener('click', function () {
-        closePopup();
-      }, {once: true});
+      close.addEventListener('click', closePopup);
 
-      document.addEventListener('keydown', function (evt) {
-        if (evt.key === 'Escape') {
-          closePopup();
-        }
-      }, {once: true});
+      document.addEventListener('keydown', closeEscape);
 
       document.addEventListener('keydown', openEnter);
 
@@ -96,10 +92,18 @@
   var closePopup = function () {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
+    blockComments.innerHTML = '';
     likeCount.removeEventListener('click', onAddLike);
     document.removeEventListener('keydown', openEnter);
-    blockComments.innerHTML = '';
     btnAddComment.removeEventListener('click', addComment);
+    document.removeEventListener('keydown', closeEscape);
+    close.removeEventListener('click', closePopup);
+  };
+
+  var closeEscape = function (evt) {
+    if (evt.key === 'Escape' && evt.target !== userComment) {
+      closePopup();
+    }
   };
 
   var openEnter = function (e) {
