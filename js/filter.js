@@ -1,5 +1,5 @@
 'use strict';
-
+// фильтр эффектов
 (function () {
 
   window.filter = {};
