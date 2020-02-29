@@ -74,7 +74,7 @@
     var onMouseUp = function () {
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onMouseUp);
-    }
+    };
   };
 
   // color filter

@@ -6,7 +6,7 @@
   var DELAY_ERROR_MS = 2000;
   var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
   var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
-  var errorType = {
+  var ERROR_TYPE = {
     OK: 200,
     PAGE_NOT_FOUND: 404,
     SERVER_ERROR: 500
@@ -28,13 +28,13 @@
 
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
-        case errorType.OK :
+        case ERROR_TYPE.OK :
           success(xhr.response);
           break;
-        case errorType.PAGE_NOT_FOUND :
+        case ERROR_TYPE.PAGE_NOT_FOUND :
           error(xhr.status + 'Страница не найдена, проверьте корректность адреса');
           break;
-        case errorType.SERVER_ERROR :
+        case ERROR_TYPE.SERVER_ERROR :
           error(xhr.status + 'Сервер временно не доступен, скоро все заработает');
           break;
         default :
