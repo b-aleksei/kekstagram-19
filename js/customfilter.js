@@ -3,6 +3,7 @@
 (function () {
 
   var RANDOM_MAX = 10;
+  var HALF = 0.5;
   var DEBOUNCE_INTERVAL = 500;
   var time = null;
   var form = document.querySelector('.img-filters__form');
@@ -11,9 +12,9 @@
   var picturesContainer = document.querySelector('.pictures');
   var buttons = form.querySelectorAll('.img-filters__button');
 
-  var randomShuffle = function (arr) {
+  var shuffleArray = function (arr) {
     arr.sort(function () {
-      return Math.random() - 0.5;
+      return Math.random() - HALF;
     });
   };
 
@@ -27,7 +28,7 @@
 
     if (e.target === randomFilter) {
       response = response.slice();
-      randomShuffle(response);
+      shuffleArray(response);
       response = response.slice(0, RANDOM_MAX);
     }
     if (e.target === discussedFilter) {
