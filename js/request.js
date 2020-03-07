@@ -65,6 +65,18 @@
   var upload = function (data, success, error) {
     var errorHandler = error || handleFailQuery;
     var xhr = startRequest(success, errorHandler);
+    var progress = document.createElement('progress');
+    xhr.upload.onprogress = function (event) {
+      progress.max = 100;
+      progress.style.cssText = 'position:fixed; top:100px; left:100px; z-index: 9999';
+      document.body.append(progress);
+      progress.value = event.loaded * 100 / event.total;
+      if (progress.value === 100) {
+        progress.remove();
+      }
+      console.log(progress.value);
+    };
+
     xhr.open('post', URL_UPLOAD);
     xhr.send(data);
   };
