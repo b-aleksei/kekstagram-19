@@ -70,8 +70,8 @@
   };
 
   window.request = {
-    load: load,
-    upload: upload,
+    load,
+    upload,
   };
 
 })();

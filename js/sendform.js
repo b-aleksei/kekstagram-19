@@ -45,7 +45,7 @@
   };
 
   window.sendform = {
-    onsubmit: onsubmit
+    onsubmit
   };
 
 })();

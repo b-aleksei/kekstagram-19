@@ -33,7 +33,7 @@
   };
 
   window.validity = {
-    hashTag: hashTag,
+    hashTag,
     method: onValidateHash
   };
 
