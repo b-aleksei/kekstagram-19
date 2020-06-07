@@ -4,8 +4,8 @@
 
   var TIMEOUT_MS = 3000;
   var DELAY_ERROR_MS = 2000;
-  var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
-  var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
+  var URL_LOAD = 'https://javascript.pages.academy/kekstagram/data';
+  var URL_UPLOAD = 'https://javascript.pages.academy/kekstagram';
   var ERROR_TYPE = {
     OK: 200,
     PAGE_NOT_FOUND: 404,

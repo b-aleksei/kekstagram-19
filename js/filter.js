@@ -1,6 +1,6 @@
 'use strict';
 // фильтр эффектов
-(function () {
+( function () {
 
   window.filter = {};
 
@@ -42,12 +42,8 @@
 
   // horizontal slider
   window.filter.onHandlerMouse = function (e) {
-
     var shiftX = e.clientX - pin.offsetLeft;
     var rightEdge = slider.offsetWidth;
-
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onMouseUp);
 
     var onMove = function (evt) {
       var left = evt.clientX - shiftX;
@@ -57,6 +53,7 @@
       if (left > rightEdge) {
         left = rightEdge;
       }
+
       colorIndicator.style.width = pin.style.left = left + 'px';
       var percent = effect.value = Math.round(left / slider.offsetWidth * 100);
 
@@ -65,7 +62,7 @@
         sepia: 'sepia(' + percent / PERCENT_MAX_VALUE + ')',
         marvin: 'invert(' + percent + '%)',
         phobos: 'blur(' + BLUR_MAX_VALUE * percent / PERCENT_MAX_VALUE + 'px)',
-        heat: 'brightness(' + (BRIGHTNESS_MIN_VALUE + BRIGHTNESS_MAX_VALUE * percent / PERCENT_MAX_VALUE) + ')',
+        heat: 'brightness(' + ( BRIGHTNESS_MIN_VALUE + BRIGHTNESS_MAX_VALUE * percent / PERCENT_MAX_VALUE ) + ')',
       };
 
       img.style.filter = filter[currentFilter];
@@ -75,6 +72,10 @@
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onMouseUp);
+
   };
 
   // color filter
@@ -95,4 +96,4 @@
   window.filter.pin = pin;
   window.filter.track = track;
 
-})();
+} )();
