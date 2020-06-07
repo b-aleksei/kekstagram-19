@@ -4,8 +4,8 @@
 
   var TIMEOUT_MS = 3000;
   var DELAY_ERROR_MS = 2000;
-  var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
-  var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
+  var URL_LOAD = 'https://javascript.pages.academy/kekstagram/data';
+  var URL_UPLOAD = 'https://javascript.pages.academy/kekstagram';
   var ERROR_TYPE = {
     OK: 200,
     PAGE_NOT_FOUND: 404,
@@ -65,6 +65,18 @@
   var upload = function (data, success, error) {
     var errorHandler = error || handleFailQuery;
     var xhr = startRequest(success, errorHandler);
+    var progress = document.createElement('progress');
+    xhr.upload.onprogress = function (event) {
+      progress.max = 100;
+      progress.style.cssText = 'position:fixed; top:100px; left:100px; z-index: 9999';
+      document.body.append(progress);
+      progress.value = event.loaded * 100 / event.total;
+      if (progress.value === 100) {
+        progress.remove();
+      }
+      console.log(progress.value);
+    };
+
     xhr.open('post', URL_UPLOAD);
     xhr.send(data);
   };
